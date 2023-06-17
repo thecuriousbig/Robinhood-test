@@ -1,0 +1,467 @@
+basePath: /api/v1
+definitions:
+  dto.BaseErrorResponse:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  dto.BaseResponse:
+    properties:
+      code:
+        type: integer
+    type: object
+  dto.BaseResponseWithData-array_dto_PopulatedComment:
+    properties:
+      code:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/dto.PopulatedComment'
+        type: array
+    type: object
+  dto.BaseResponseWithData-dto_ListBlogResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/dto.ListBlogResponse'
+    type: object
+  dto.BaseResponseWithData-dto_LoginResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/dto.LoginResponse'
+    type: object
+  dto.BaseResponseWithData-dto_PopulatedBlog:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/dto.PopulatedBlog'
+    type: object
+  dto.BaseResponseWithData-dto_PopulatedComment:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/dto.PopulatedComment'
+    type: object
+  dto.BaseResponseWithData-dto_User:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/dto.User'
+    type: object
+  dto.ListBlogResponse:
+    properties:
+      blogs:
+        items:
+          $ref: '#/definitions/dto.PopulatedBlog'
+        type: array
+      hasNext:
+        type: boolean
+    type: object
+  dto.LoginResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  dto.PopulatedBlog:
+    properties:
+      author:
+        $ref: '#/definitions/dto.User'
+      content:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: string
+      status:
+        type: string
+      title:
+        type: string
+    type: object
+  dto.PopulatedComment:
+    properties:
+      author:
+        $ref: '#/definitions/dto.User'
+      blogId:
+        type: string
+      content:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: string
+    type: object
+  dto.User:
+    properties:
+      email:
+        type: string
+      id:
+        type: string
+      profileImage:
+        type: string
+      username:
+        type: string
+    type: object
+host: localhost:8081
+info:
+  contact:
+    email: tanatorn.nateesanprasert@gmail.com
+    name: Tanatorn Nateesanpraser
+  description: This is a Robinhood test API server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Robinhood test API
+  version: "1.0"
+paths:
+  /blog:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: limit per page
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.BaseResponseWithData-dto_ListBlogResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: List blog
+      tags:
+      - Blog
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: blog title
+        in: body
+        name: title
+        required: true
+        schema:
+          type: string
+      - description: blog content
+        in: body
+        name: content
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.BaseResponseWithData-dto_PopulatedBlog'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create Blog
+      tags:
+      - Blog
+  /blog/{blogId}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: blog id
+        in: path
+        name: blogId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.BaseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Archive blog
+      tags:
+      - Blog
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: blog id
+        in: path
+        name: blogId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.BaseResponseWithData-dto_PopulatedBlog'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get blog by id
+      tags:
+      - Blog
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: blog id
+        in: path
+        name: blogId
+        required: true
+        type: string
+      - description: blog status
+        in: body
+        name: status
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.BaseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update blog status
+      tags:
+      - Blog
+  /comment/{blogId}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: blog id
+        in: path
+        name: blogId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.BaseResponseWithData-array_dto_PopulatedComment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: List comment
+      tags:
+      - Comment
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: blog id
+        in: path
+        name: blogId
+        required: true
+        type: string
+      - description: comment content
+        in: body
+        name: content
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.BaseResponseWithData-dto_PopulatedComment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create comment
+      tags:
+      - Comment
+  /user:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: url of profile image
+        in: body
+        name: profileImage
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.BaseResponseWithData-dto_User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update user
+      tags:
+      - User
+  /user/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: username
+        in: body
+        name: username
+        required: true
+        schema:
+          type: string
+      - description: password
+        in: body
+        name: password
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.BaseResponseWithData-dto_LoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+      summary: Login
+      tags:
+      - User
+  /user/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: username
+        in: body
+        name: username
+        required: true
+        schema:
+          type: string
+      - description: password
+        in: body
+        name: password
+        required: true
+        schema:
+          type: string
+      - description: email
+        in: body
+        name: email
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.BaseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+      summary: Register
+      tags:
+      - User
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
