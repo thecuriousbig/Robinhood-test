@@ -15,7 +15,14 @@ P.S. MongoDB container have 3 replicas for doing operation in transaction
 2. application runs on port `8080`
 3. swagger url: `http://localhost:8080/swagger/index.html`
 4. call register api and login to get token then authorize with value `Bearer {token}`
-5. call other apis
+
+https://github.com/thecuriousbig/robinhood-test/assets/25192525/3c3062a4-83c5-400f-a83a-f28f0e6531cd
+
+6. call other apis
+
+
+
+
 
 ---
 #### REST APIS
