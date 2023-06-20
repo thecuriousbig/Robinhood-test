@@ -4,7 +4,7 @@ By Tanatorn Nateesanprasert
 
 ---
 This application contains 2 main components
-1. Golang application container
+1. Golang application container (100% test on services layer)
 2. MongoDB container
 
 P.S. MongoDB container have 3 replicas for doing operation in transaction
